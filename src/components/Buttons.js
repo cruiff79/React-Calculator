@@ -2,10 +2,6 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 
 class Buttons extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     sendNumber = (num) => {
         this.props.btnNumber(num);
     }
@@ -15,7 +11,7 @@ class Buttons extends React.Component {
             <div>
                 <Button
                     variant="secondary"
-                    onClick={()=>{
+                    onClick={() => {
                         this.sendNumber(this.props.num);
                     }}
                 >

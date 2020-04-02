@@ -7,33 +7,109 @@ class Calculator extends React.Component {
         super(props);
 
         this.state = {
-            result: ''
+            value: null,
+            result: '',
+            sign: '',
+            isFlag: false
         }
     }
 
     handleNumber = (data) => {
+        let val = 0;
+        let rst = 0;
+
         if(typeof data == 'number') {
+            if(this.state.sign === '') {
+                this.setState({
+                    result: this.state.result + data
+                });
+            } else {
+                if(this.state.isFlag) {
+                    this.setState({
+                        result: this.state.result.toString() + data
+                    });
+                } else {
+                    this.setState({
+                        result: data,
+                        isFlag: true
+                    });
+                }   
+            }
+
+        } else {
+            if(data === 'C') {
+                val = null;
+                rst = '';
+                data = '';
+            }else if(data === '=') {
+                val = 0;
+                rst = '';
+            } else if(data === '+') {
+                if(this.state.value == null) {
+                    val = this.state.result;
+                    rst = this.state.result;
+                } else {
+                    val = parseInt(this.state.value) + parseInt(this.state.result);
+                    rst = parseInt(this.state.value) + parseInt(this.state.result);
+                }
+            } else if(data === '-') {
+                if(this.state.value == null) {
+                    val = this.state.result;
+                    rst = this.state.result;
+                } else {
+                    val = parseInt(this.state.value) - parseInt(this.state.result);
+                    rst = parseInt(this.state.value) - parseInt(this.state.result);
+                }
+            } else if(data === '*') {
+                if(this.state.value == null) {
+                    val = this.state.result;
+                    rst = this.state.result;
+                } else {
+                    val = parseInt(this.state.value) * parseInt(this.state.result);
+                    rst = parseInt(this.state.value) * parseInt(this.state.result);
+                }
+            } else if(data === '/') {
+                if(this.state.value == null) {
+                    val = this.state.result;
+                    rst = this.state.result;
+                } else {
+                    val = parseInt(this.state.value) / parseInt(this.state.result);
+                    rst = parseInt(this.state.value) / parseInt(this.state.result);
+                }
+            }
+
             this.setState({
-                result: this.state.result + data
+                value: val,
+                result: rst,
+                sign: data,
+                isFlag: false
             });
         }
     }
 
     render() {
-        let sign = ['+','-','*','/','C','='];
+        let arrSign = ['+','-','*','/','C','='];
         let rows = [];
         for (let i = 0; i < 10; i++) {
           rows.push(<Buttons num={i} btnNumber = {this.handleNumber} />);
         }
 
-        for(let i = 0; i < sign.length; i++) {
-            rows.push(<Buttons num={sign[i]} btnNumber = {this.handleNumber} />);
+        for(let i = 0; i < arrSign.length; i++) {
+            rows.push(<Buttons num={arrSign[i]} btnNumber = {this.handleNumber} />);
         }
 
         return (
             <div className="Main">
                 <div>
-                    <input type="text" name="input_number" value={this.state.result} />
+                    <input
+                        type="text"
+                        name="input_number"
+                        value={this.state.result}
+                        onChange={(e) => {
+                            this.setState({result: e.target.value})
+                            }
+                        }
+                    />
                 </div>
                 <div>
                     <ButtonGroup aria-label="First group">
