@@ -10,10 +10,12 @@ class Calculator extends React.Component {
             value: null,
             result: '',
             sign: '',
-            isFlag: false
+            isFlag: false,
+            arrSign: ['+','-','*','/','C','=']
         }
     }
 
+    // callback from Buttons component
     handleNumber = (data) => {
         let val = 0;
         let rst = 0;
@@ -35,46 +37,24 @@ class Calculator extends React.Component {
                     });
                 }   
             }
-
         } else {
-            if(data === 'C') {
+            if(data === this.state.arrSign[4]) {
+                // button C
                 val = null;
                 rst = '';
                 data = '';
-            }else if(data === '=') {
-                val = 0;
-                rst = '';
-            } else if(data === '+') {
+            }else if(data === this.state.arrSign[5]) {
+                // button =
+                val = null;
+                rst = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
+            } else {
+                // button +,-,*,/
                 if(this.state.value == null) {
                     val = this.state.result;
                     rst = this.state.result;
                 } else {
-                    val = parseInt(this.state.value) + parseInt(this.state.result);
-                    rst = parseInt(this.state.value) + parseInt(this.state.result);
-                }
-            } else if(data === '-') {
-                if(this.state.value == null) {
-                    val = this.state.result;
-                    rst = this.state.result;
-                } else {
-                    val = parseInt(this.state.value) - parseInt(this.state.result);
-                    rst = parseInt(this.state.value) - parseInt(this.state.result);
-                }
-            } else if(data === '*') {
-                if(this.state.value == null) {
-                    val = this.state.result;
-                    rst = this.state.result;
-                } else {
-                    val = parseInt(this.state.value) * parseInt(this.state.result);
-                    rst = parseInt(this.state.value) * parseInt(this.state.result);
-                }
-            } else if(data === '/') {
-                if(this.state.value == null) {
-                    val = this.state.result;
-                    rst = this.state.result;
-                } else {
-                    val = parseInt(this.state.value) / parseInt(this.state.result);
-                    rst = parseInt(this.state.value) / parseInt(this.state.result);
+                    val = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
+                    rst = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
                 }
             }
 
@@ -87,29 +67,33 @@ class Calculator extends React.Component {
         }
     }
 
+    // calculate between num1 and num2
+    clac = (num1, num2, sign) => {
+        if(sign === this.state.arrSign[0]) {
+            return num1 + num2;
+        } else if(sign === this.state.arrSign[1]) {
+            return num1 - num2;
+        } else if(sign === this.state.arrSign[2]) {
+            return num1 * num2;
+        } else if(sign === this.state.arrSign[3]) {
+            return num1 / num2;
+        }
+    }
+
     render() {
-        let arrSign = ['+','-','*','/','C','='];
         let rows = [];
         for (let i = 0; i < 10; i++) {
           rows.push(<Buttons num={i} btnNumber = {this.handleNumber} />);
         }
 
-        for(let i = 0; i < arrSign.length; i++) {
-            rows.push(<Buttons num={arrSign[i]} btnNumber = {this.handleNumber} />);
+        for(let i = 0; i < this.state.arrSign.length; i++) {
+            rows.push(<Buttons num={this.state.arrSign[i]} btnNumber = {this.handleNumber} />);
         }
 
         return (
             <div className="Main">
                 <div>
-                    <input
-                        type="text"
-                        name="input_number"
-                        value={this.state.result}
-                        onChange={(e) => {
-                            this.setState({result: e.target.value})
-                            }
-                        }
-                    />
+                    <input type="text" name="input_number" value={this.state.result} readOnly />
                 </div>
                 <div>
                     <ButtonGroup aria-label="First group">
