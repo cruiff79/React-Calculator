@@ -21,6 +21,9 @@ class Calculator extends React.Component {
         let rst = 0;
 
         if(typeof data == 'number') {
+            // prevent to begin 0
+            if(this.state.result === 0 || (data === 0 && this.state.result === '')) return;
+
             if(this.state.sign === '') {
                 this.setState({
                     result: this.state.result + data
@@ -38,17 +41,21 @@ class Calculator extends React.Component {
                 }   
             }
         } else {
+            // button C
             if(data === this.state.arrSign[4]) {
-                // button C
                 val = null;
                 rst = '';
                 data = '';
+            // button =
             }else if(data === this.state.arrSign[5]) {
-                // button =
+                if(!this.state.isFlag) return;
+
                 val = null;
                 rst = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
+            // button +,-,*,/
             } else {
-                // button +,-,*,/
+                if(!this.state.isFlag && this.state.sign !== '') return;
+
                 if(this.state.value == null) {
                     val = this.state.result;
                     rst = this.state.result;
