@@ -52,6 +52,7 @@ class Calculator extends React.Component {
 
                 val = null;
                 rst = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
+                data = '';
             // button +,-,*,/
             } else {
                 if(!this.state.isFlag && this.state.sign !== '') return;
