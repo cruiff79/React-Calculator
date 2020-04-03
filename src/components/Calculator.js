@@ -51,7 +51,7 @@ class Calculator extends React.Component {
                 if(!this.state.isFlag) return;
 
                 val = null;
-                rst = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
+                rst = this.clac(Number(this.state.value), Number(this.state.result), this.state.sign);
             // button +,-,*,/
             } else {
                 if(!this.state.isFlag && this.state.sign === data) return;
@@ -66,8 +66,8 @@ class Calculator extends React.Component {
                         });
                         return;
                     }
-                    val = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
-                    rst = this.clac(parseInt(this.state.value), parseInt(this.state.result), this.state.sign);
+                    val = this.clac(Number(this.state.value), Number(this.state.result), this.state.sign);
+                    rst = this.clac(Number(this.state.value), Number(this.state.result), this.state.sign);
                 }
             }
 
