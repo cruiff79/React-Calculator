@@ -19,3 +19,7 @@ Button {
   width: 80px;
   height: 80px;
 }
+
+.btnClass {
+  padding: 0.5px;
+}

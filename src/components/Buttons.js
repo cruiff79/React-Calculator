@@ -8,7 +8,7 @@ class Buttons extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="btnClass">
                 <Button
                     variant="secondary"
                     onClick={() => {

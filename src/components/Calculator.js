@@ -106,6 +106,9 @@ class Calculator extends React.Component {
         return (
             <div className="Main">
                 <div>
+                    <h3>A simple React calculator</h3>
+                </div>
+                <div>
                     <input type="text" name="input_number" value={this.state.result} readOnly />
                 </div>
                 <div>
