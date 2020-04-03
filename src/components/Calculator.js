@@ -22,9 +22,8 @@ class Calculator extends React.Component {
         let rst = 0;
         let isFlag = false;
 
+        // button number or button .
         if(typeof data == 'number' || data === this.state.arrSign[8]) {
-            // prevent to begin 0
-            if(this.state.result === 0 || (data === 0 && this.state.result === '')) return;
             // button .
             if(data === this.state.arrSign[8]) {
                 if(this.state.isDot) return;
@@ -34,9 +33,15 @@ class Calculator extends React.Component {
             }
 
             if(this.state.sign === '') {
-                this.setState({
-                    result: this.state.result.toString() + data
-                });
+                if(data === 0 && !this.state.isDot) {
+                    this.setState({
+                        result: data
+                    });
+                } else {
+                    this.setState({
+                        result: this.state.result.toString() + data
+                    });
+                }
             } else {
                 if(this.state.isFlag) {
                     this.setState({
