@@ -11,7 +11,8 @@ class Calculator extends React.Component {
             result: '',
             sign: '',
             isFlag: false,
-            arrSign: ['+','-','*','/','C','=']
+            isDot: false,
+            arrSign: ["+","-","*","/","C","=","+/-","%","."]
         }
     }
 
@@ -19,14 +20,22 @@ class Calculator extends React.Component {
     handleNumber = (data) => {
         let val = 0;
         let rst = 0;
+        let isFlag = false;
 
-        if(typeof data == 'number') {
+        if(typeof data == 'number' || data === this.state.arrSign[8]) {
             // prevent to begin 0
             if(this.state.result === 0 || (data === 0 && this.state.result === '')) return;
+            // button .
+            if(data === this.state.arrSign[8]) {
+                if(this.state.isDot) return;
+                this.setState({
+                    isDot: true
+                });
+            }
 
             if(this.state.sign === '') {
                 this.setState({
-                    result: this.state.result + data
+                    result: this.state.result.toString() + data
                 });
             } else {
                 if(this.state.isFlag) {
@@ -52,6 +61,26 @@ class Calculator extends React.Component {
 
                 val = null;
                 rst = this.clac(Number(this.state.value), Number(this.state.result), this.state.sign);
+            // button +/-
+            } else if(data === this.state.arrSign[6]) {
+                if(this.state.value === null) {
+                    val = null;
+                } else {
+                    val = this.state.value;
+                }
+                rst = this.state.result * -1;
+                isFlag = this.state.isFlag;
+                data = this.state.sign;
+            // button %
+            } else if(data === this.state.arrSign[7]) {
+                if(this.state.value === null) {
+                    val = null;
+                } else {
+                    val = this.state.value;
+                }
+                rst = this.state.result * 0.01;
+                isFlag = this.state.isFlag;
+                data = this.state.sign;
             // button +,-,*,/
             } else {
                 if(!this.state.isFlag && this.state.sign === data) return;
@@ -75,7 +104,8 @@ class Calculator extends React.Component {
                 value: val,
                 result: rst,
                 sign: data,
-                isFlag: false
+                isFlag: isFlag,
+                isDot: false
             });
         }
     }
@@ -112,8 +142,13 @@ class Calculator extends React.Component {
                     <input type="text" name="input_number" value={this.state.result} readOnly />
                 </div>
                 <div>
+                    <ButtonGroup aria-label="Fourth group">
+                        {rows[14]}{rows[16]}{rows[17]}{rows[13]}
+                    </ButtonGroup>
+                </div>
+                <div>
                     <ButtonGroup aria-label="First group">
-                        {rows[7]}{rows[8]}{rows[9]}{rows[10]}
+                        {rows[7]}{rows[8]}{rows[9]}{rows[12]}
                     </ButtonGroup>
                 </div>
                 <div>
@@ -123,12 +158,12 @@ class Calculator extends React.Component {
                 </div>
                 <div>
                     <ButtonGroup aria-label="Third group">
-                        {rows[1]}{rows[2]}{rows[3]}{rows[12]}
+                        {rows[1]}{rows[2]}{rows[3]}{rows[10]}
                     </ButtonGroup>
                 </div>
                 <div>
                     <ButtonGroup aria-label="Fourth group">
-                        {rows[14]}{rows[0]}{rows[15]}{rows[13]}
+                        {rows[0]}{rows[18]}{rows[15]}
                     </ButtonGroup>
                 </div>
             </div>

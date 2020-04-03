@@ -7,9 +7,9 @@
 }
 
 input[type=text] {
-  width: 320px;
-  height: 50px;
-  font-size: 1.6em;
+  width: 325px;
+  height: 70px;
+  font-size: 2.5em;
   margin: 1px 0;
   border: 2px solid #555;
   text-align: right;
