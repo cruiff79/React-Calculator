@@ -8,7 +8,7 @@ class Calculator extends React.Component {
 
         this.state = {
             value: null,
-            result: '',
+            result: 0,
             sign: '',
             isFlag: false,
             isDot: false,
@@ -26,39 +26,57 @@ class Calculator extends React.Component {
         if(typeof data == 'number' || data === this.state.arrSign[8]) {
             // button .
             if(data === this.state.arrSign[8]) {
-                if(this.state.isDot) return;
+                if(this.state.isDot) {
+                    return;
+                }
+
                 this.setState({
                     isDot: true
                 });
+                console.log("isDot: ", this.state.isDot);
             }
 
             if(this.state.sign === '') {
-                if(data === 0 && !this.state.isDot) {
-                    this.setState({
-                        result: data
-                    });
+                if(data === 0 && !this.state.isFlag) {
+                    return;
                 } else {
-                    this.setState({
-                        result: this.state.result.toString() + data
-                    });
+                    if(this.state.result === 0) {
+                        this.setState({
+                            result: this.state.result + data,
+                            isFlag: true
+                        });
+                    } else {
+                        this.setState({
+                            result: this.state.result.toString() + data,
+                            isFlag: true
+                        });
+                    }
                 }
             } else {
-                if(this.state.isFlag) {
+                if(this.state.isFlag && this.state.result !== 0) {
                     this.setState({
                         result: this.state.result.toString() + data
                     });
                 } else {
-                    this.setState({
-                        result: data,
-                        isFlag: true
-                    });
+                    if(data === this.state.arrSign[8]) {
+                        this.setState({
+                            result: this.state.result.toString() + data,
+                            isFlag: true
+                        });
+                    } else {
+                        console.log("result: ", this.state.result);
+                        this.setState({
+                            result: data,
+                            isFlag: true
+                        });
+                    }
                 }   
             }
         } else {
             // button C
             if(data === this.state.arrSign[4]) {
                 val = null;
-                rst = '';
+                rst = 0;
                 data = '';
             // button =
             }else if(data === this.state.arrSign[5]) {
