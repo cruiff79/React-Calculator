@@ -33,7 +33,6 @@ class Calculator extends React.Component {
                 this.setState({
                     isDot: true
                 });
-                console.log("isDot: ", this.state.isDot);
             }
 
             if(this.state.sign === '') {
@@ -64,7 +63,6 @@ class Calculator extends React.Component {
                             isFlag: true
                         });
                     } else {
-                        console.log("result: ", this.state.result);
                         this.setState({
                             result: data,
                             isFlag: true
@@ -81,9 +79,8 @@ class Calculator extends React.Component {
             // button =
             }else if(data === this.state.arrSign[5]) {
                 if(!this.state.isFlag) return;
-
                 val = null;
-                rst = this.clac(Number(this.state.value), Number(this.state.result), this.state.sign);
+                rst = this.clac(this.state.value, this.state.result, this.state.sign);
             // button +/-
             } else if(data === this.state.arrSign[6]) {
                 if(this.state.value === null) {
@@ -107,7 +104,6 @@ class Calculator extends React.Component {
             // button +,-,*,/
             } else {
                 if(!this.state.isFlag && this.state.sign === data) return;
-
                 if(this.state.value == null) {
                     val = this.state.result;
                     rst = this.state.result;
@@ -118,8 +114,8 @@ class Calculator extends React.Component {
                         });
                         return;
                     }
-                    val = this.clac(Number(this.state.value), Number(this.state.result), this.state.sign);
-                    rst = this.clac(Number(this.state.value), Number(this.state.result), this.state.sign);
+                    val = this.clac(this.state.value, this.state.result, this.state.sign);
+                    rst = this.clac(this.state.value, this.state.result, this.state.sign);
                 }
             }
 
@@ -135,14 +131,16 @@ class Calculator extends React.Component {
 
     // calculate between num1 and num2
     clac = (num1, num2, sign) => {
+        num1 = Number(num1);
+        num2 = Number(num2);
         if(sign === this.state.arrSign[0]) {
-            return num1 + num2;
+            return +(num1 + num2).toFixed(13);
         } else if(sign === this.state.arrSign[1]) {
-            return num1 - num2;
+            return +(num1 - num2).toFixed(13);
         } else if(sign === this.state.arrSign[2]) {
-            return num1 * num2;
+            return +(num1 * num2).toFixed(13);
         } else if(sign === this.state.arrSign[3]) {
-            return num1 / num2;
+            return +(num1 / num2).toFixed(13);
         }
     }
 
