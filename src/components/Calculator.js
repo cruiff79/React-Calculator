@@ -12,7 +12,7 @@ class Calculator extends React.Component {
             sign: '',
             isFlag: false,
             isDot: false,
-            arrSign: ["+","-","*","/","C","=","+/-","%","."]
+            arrSign: ["+","-","x","÷","C","=","+/-","%","."]
         }
     }
 
